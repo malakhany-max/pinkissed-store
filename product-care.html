@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Care | Pinkissed</title>
+  <link rel="icon" href="Logo22.png" type="image/png">
+  <link rel="apple-touch-icon" href="Logo22.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a href="index.html" class="brand" style="cursor:pointer;text-decoration:none;color:inherit;">
+        <img src="Logo2.png" alt="Pinkissed Logo">
+        <div>
+          <h1>Pinkissed</h1>
+          <p>Made To Match You</p>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <button id="cart-btn" class="cart-btn-nav" onclick="window.location.href='cart.html'">🛒 <span class="cart-count">0</span></button>
+        <button id="auth-btn" class="auth-btn">Login</button>
+      </div>
+      <button id="menu-toggle" class="menu-toggle">☰</button>
+      <nav class="nav-links" id="nav-links">
+        <button class="close-menu-btn" id="close-menu-btn">✕</button>
+        <a href="index.html">Main Page</a>
+        <a href="products.html">Products</a>
+        <a href="product-care.html" class="active">Product Care</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="orders.html">My Orders</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="offers-banner">
+    <div class="offer-item"><span class="offer-icon">🎁</span> Buy 3 Get 1 FREE</div>
+    <div class="offer-item"><span class="offer-icon">🚀</span> Buy 5 Get 6th FREE + Free Shipping</div>
+  </div>
+
+  <section class="section" id="product-care">
+    <div class="container">
+      <div class="section-title">
+        <span>Tips & Tricks</span>
+        <h3>Product Care</h3>
+        <p>How to Keep Your Pins Happy & Shiny!</p>
+      </div>
+
+      <div class="care-grid">
+        <div class="care-card">
+          <div class="care-icon">💧</div>
+          <h4>Keep Them Dry</h4>
+          <p>Water and pins don't mix! Keep them away from rain, pools, and accidental trips to the washing machine.</p>
+        </div>
+
+        <div class="care-card">
+          <div class="care-icon">📦</div>
+          <h4>Store Them Like Treasure</h4>
+          <p>Keep them in a jewelry box or soft pouch so they don't get scratched or lost.</p>
+        </div>
+
+        <div class="care-card">
+          <div class="care-icon">✨</div>
+          <h4>No Perfume, Please</h4>
+          <p>Avoid direct contact with perfume, creams, lotion, or sprays to keep your accessories shiny and beautiful.</p>
+        </div>
+
+        <div class="care-card">
+          <div class="care-icon">❤️</div>
+          <h4>Be Gentle With Them</h4>
+          <p>Handle your pins and accessories softly to keep them secure and looking their best.</p>
+        </div>
+
+        <div class="care-card">
+          <div class="care-icon">⏰</div>
+          <h4>Last On, First Off</h4>
+          <p>Put your accessories on after perfume and makeup, then remove them first at the end of the day.</p>
+        </div>
+
+        <div class="care-card">
+          <div class="care-icon">💎</div>
+          <h4>Keep Them Clean</h4>
+          <p>A soft cloth is all you need to wipe away dust or fingerprints. No soap needed!</p>
+        </div>
+
+        <div class="care-card">
+          <div class="care-icon">🔒</div>
+          <h4>Secure That Backing</h4>
+          <p>Check pin backs often to make sure they're snug so they don't escape!</p>
+        </div>
+
+        <div class="care-card">
+          <div class="care-icon">🛍️</div>
+          <h4>Handle With Love</h4>
+          <p>Avoid dropping, bending, or using them as ninja stars. They need gentle care!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="auth-modal" class="modal">
+    <div class="modal-content auth-modal-content">
+      <div class="modal-header">
+        <h3 id="auth-modal-title">Login</h3>
+        <button id="close-auth" class="close-modal">×</button>
+      </div>
+      <form id="auth-form" class="auth-form">
+        <input type="text" id="auth-name" placeholder="Full Name">
+        <input type="email" id="auth-email" placeholder="Email" required>
+        <input type="tel" id="auth-phone" placeholder="Phone Number">
+        <input type="password" id="auth-password" placeholder="Password" required>
+        <button type="submit" class="btn primary" id="auth-submit">Login</button>
+      </form>
+      <p id="auth-message" class="message"></p>
+      <p class="auth-switch">
+        <span id="auth-switch-text">Don't have an account?</span>
+        <button type="button" id="auth-switch-btn">Sign Up</button>
+      </p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      © 2026 Pinkissed — All Rights Reserved
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

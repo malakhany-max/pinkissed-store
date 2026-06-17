@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product - Pinkissed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="Logo22.png" type="image/png">
+  <link rel="apple-touch-icon" href="Logo22.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .featured-section{
+      margin-top:40px;
+    }
+    .featured-section h3{
+      color:var(--pink4);
+      margin-bottom:16px;
+    }
+    .featured-grid{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:16px;
+    }
+    .featured-item{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      cursor:pointer;
+      transition:.3s;
+    }
+    .featured-item:hover{
+      transform:translateY(-4px);
+    }
+    .featured-item img{
+      width:100%;
+      height:150px;
+      object-fit:cover;
+      border-radius:12px;
+      margin-bottom:10px;
+    }
+    .featured-item h4{
+      color:var(--text);
+      margin-bottom:6px;
+    }
+    .featured-item span{
+      color:var(--pink4);
+      font-weight:700;
+    }
+    .featured-item p{
+      color:#7b4b61;
+      font-size:0.85rem;
+      margin-top:6px;
+    }
+
+    .product-page{
+      max-width:900px;
+      margin:0 auto;
+      padding:20px;
+    }
+    .product-full{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:30px;
+      background:#fff;
+      border-radius:24px;
+      padding:30px;
+      box-shadow:var(--shadow);
+    }
+    .product-full-image{
+      width:100%;
+      border-radius:20px;
+    }
+    .product-full-info h1{
+      color:var(--pink4);
+      margin-bottom:10px;
+    }
+    .product-full-info .stars{
+      font-size:1.3rem;
+      color:#FFD700;
+      margin-bottom:10px;
+    }
+    .product-full-info .price{
+      font-size:2rem;
+      color:var(--pink4);
+      font-weight:900;
+      margin-bottom:16px;
+    }
+    .product-full-info p{
+      color:#7b4b61;
+      margin-bottom:20px;
+      line-height:1.6;
+    }
+    .product-full-info .add-btn{
+      width:100%;
+      padding:16px;
+      border-radius:999px;
+      border:none;
+      background:linear-gradient(135deg, var(--pink2), var(--pink4));
+      color:#fff;
+      font-size:1.1rem;
+      font-weight:800;
+      cursor:pointer;
+      margin-bottom:12px;
+    }
+    .product-full-info .back-btn{
+      width:100%;
+      padding:14px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#fff;
+      cursor:pointer;
+    }
+    .similar-full{
+      margin-top:40px;
+    }
+    .similar-full h3{
+      color:var(--pink4);
+      margin-bottom:16px;
+    }
+    .similar-full-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
+      gap:16px;
+    }
+    .similar-full-item{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      text-align:center;
+      cursor:pointer;
+      transition:.3s;
+    }
+    .similar-full-item:hover{
+      transform:translateY(-4px);
+    }
+    .similar-full-item img{
+      width:100%;
+      height:150px;
+      object-fit:cover;
+      border-radius:12px;
+      margin-bottom:10px;
+    }
+    .similar-full-item h4{
+      color:var(--text);
+      margin-bottom:6px;
+    }
+    .similar-full-item span{
+      color:var(--pink4);
+      font-weight:700;
+    }
+    .reviews-full{
+      margin-top:40px;
+      background:#fff;
+      border-radius:24px;
+      padding:30px;
+    }
+    .reviews-full h3{
+      color:var(--pink4);
+      margin-bottom:16px;
+    }
+    .review-full-item{
+      padding:16px;
+      border-bottom:1px solid var(--border);
+    }
+    .review-full-item:last-child{
+      border-bottom:none;
+    }
+    @media (max-width: 700px){
+      .product-full{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a href="index.html" class="brand" style="cursor:pointer;text-decoration:none;color:inherit;">
+        <img src="Logo2.png" alt="Pinkissed Logo">
+        <div>
+          <h1>Pinkissed</h1>
+          <p>Made To Match You</p>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <button id="auth-btn" class="auth-btn">Login</button>
+        <button id="cart-btn" class="cart-btn-nav" onclick="window.location.href='cart.html'">🛒 <span class="cart-count">0</span></button>
+      </div>
+      <button id="menu-toggle" class="menu-toggle">☰</button>
+      <nav class="nav-links" id="nav-links">
+        <button class="close-menu-btn" id="close-menu-btn">✕</button>
+        <a href="index.html">Main Page</a>
+        <a href="products.html">Products</a>
+        <a href="product-care.html">Product Care</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="orders.html">My Orders</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:30px;">
+    <div class="product-page">
+      <div id="product-content" class="product-full"></div>
+
+      <div class="featured-section">
+        <h3>You Might Also Like</h3>
+        <div id="featured-list" class="featured-grid"></div>
+      </div>
+      
+      <div class="similar-full">
+        <h3>Similar Products</h3>
+        <div id="similar-list" class="similar-full-grid"></div>
+      </div>
+
+      <div class="reviews-full">
+        <h3>Reviews</h3>
+        <div id="reviews-list"></div>
+        <form id="review-form" style="margin-top:20px; display:grid; gap:12px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span>Your Rating:</span>
+            <div id="star-input">
+              <span data-rating="1">★</span>
+              <span data-rating="2">★</span>
+              <span data-rating="3">★</span>
+              <span data-rating="4">★</span>
+              <span data-rating="5">★</span>
+            </div>
+          </div>
+          <textarea id="review-text" placeholder="Write your review..." rows="3" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--border); font-family:inherit;"></textarea>
+          <button type="submit" class="btn primary" style="padding:14px;">Submit Review</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <div id="auth-modal" class="modal">
+    <div class="modal-content auth-modal-content">
+      <div class="modal-header">
+        <h3 id="auth-modal-title">Login</h3>
+        <button id="close-auth" class="close-modal">×</button>
+      </div>
+      <form id="auth-form" class="auth-form">
+        <input type="text" id="auth-name" placeholder="Full Name">
+        <input type="email" id="auth-email" placeholder="Email" required>
+        <input type="tel" id="auth-phone" placeholder="Phone Number">
+        <input type="password" id="auth-password" placeholder="Password" required>
+        <button type="submit" class="btn primary" id="auth-submit">Login</button>
+      </form>
+      <p id="auth-message" class="message"></p>
+      <p class="auth-switch">
+        <span id="auth-switch-text">Don't have an account?</span>
+        <button type="button" id="auth-switch-btn">Sign Up</button>
+      </p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+
+    async function loadProduct() {
+      const res = await fetch(`${API_URL}/api/products`);
+      const products = await res.json();
+      const product = products.find(p => p.id == productId);
+      
+      if (!product) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      const rating = Math.floor(Math.random() * 2) + 4;
+      const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+      const reviewCount = Math.floor(Math.random() * 50) + 10;
+
+      document.getElementById('product-content').innerHTML = `
+        <img src="${product.image_url || 'Logo2.png'}" alt="${product.name}" class="product-full-image">
+        <div class="product-full-info">
+          <span class="product-label">${product.label || 'Pinkissed Pick'}</span>
+          <h1>${product.name}</h1>
+          <div class="stars">${stars} <span style="color:#7b4b61; font-size:0.9rem">(${reviewCount} reviews)</span></div>
+          <div class="price">${product.price} LE</div>
+          <p>${product.description || 'No description available.'}</p>
+          <button class="add-btn" id="product-add-btn" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}" data-image="${product.image_url || 'Logo2.png'}" onclick="event.stopPropagation(); addToCart(this)">Add to Cart</button>
+          <button class="back-btn" onclick="window.location.href='index.html'">← Back to Shop</button>
+        </div>
+      `;
+
+      const featured = products.filter(p => p.id != productId).slice(0, 2);
+      document.getElementById('featured-list').innerHTML = featured.map(p => `
+        <div class="featured-item" onclick="window.location.href='product.html?id=${p.id}'">
+          <img src="${p.image_url || 'Logo2.png'}" alt="${p.name}">
+          <h4>${p.name}</h4>
+          <span>${p.price} LE</span>
+          <p>${p.description}</p>
+        </div>
+      `).join('');
+
+      const similar = products.filter(p => p.id != productId).slice(0, 2);
+      document.getElementById('similar-list').innerHTML = similar.map(p => `
+        <div class="similar-full-item" onclick="window.location.href='product.html?id=${p.id}'">
+          <img src="${p.image_url || 'Logo2.png'}" alt="${p.name}">
+          <h4>${p.name}</h4>
+          <span>${p.price} LE</span>
+        </div>
+      `).join('');
+
+      document.getElementById('reviews-list').innerHTML = `
+        <div class="review-full-item">
+          <div class="stars">★★★★★</div>
+          <p>Beautiful pins! Exactly as shown.</p>
+          <small>Sarah M. - 2 days ago</small>
+        </div>
+        <div class="review-full-item">
+          <div class="stars">★★★★☆</div>
+          <p>Love them! Will order again.</p>
+          <small>Lina K. - 1 week ago</small>
+        </div>
+      `;
+    }
+
+    let selectedRating = 0;
+    document.getElementById('star-input').addEventListener('click', (e) => {
+      if (e.target.dataset.rating) {
+        selectedRating = parseInt(e.target.dataset.rating);
+        document.querySelectorAll('#star-input span').forEach(s => {
+          s.classList.toggle('active', s.dataset.rating <= selectedRating);
+        });
+      }
+    });
+
+    document.getElementById('review-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (selectedRating === 0) return showToast('Please select a rating', 'error');
+      showToast('Thank you for your review!');
+      e.target.reset();
+    });
+
+    loadProduct();
+  </script>
+</body>
+</html>

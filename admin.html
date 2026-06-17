@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pinkissed Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="Logo22.png" type="image/png">
+  <link rel="apple-touch-icon" href="Logo22.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+  <div class="admin-page container">
+    <div class="admin-header-box">
+      <div class="brand">
+        <img src="Logo2.png" alt="Pinkissed Logo">
+        <div>
+          <h1>Pinkissed Admin</h1>
+          <p>Admin Dashboard</p>
+        </div>
+      </div>
+      <a href="index.html" class="btn secondary">Back to Site</a>
+    </div>
+
+    <div id="auth-box" class="auth-box card-box">
+      <h2>Login</h2>
+      <p class="muted">Enter admin email and password</p>
+      <form id="login-form">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit" class="btn primary">Login</button>
+      </form>
+      <p id="login-message" class="message"></p>
+    </div>
+
+    <div id="admin-panel" class="hidden">
+      <div class="admin-tabs">
+        <button id="products-tab" class="tab-btn active">Products</button>
+        <button id="settings-tab" class="tab-btn">Site Settings</button>
+        <button id="orders-tab" class="tab-btn">Orders <span id="notification-badge" class="badge-count">0</span></button>
+        <button id="users-tab" class="tab-btn">Users</button>
+        <button id="activity-tab" class="tab-btn">Activity Log</button>
+        <button id="logout-btn" class="btn secondary">Logout</button>
+      </div>
+
+      <div id="products-panel">
+        <div class="card-box">
+          <h3>Add / Edit Product</h3>
+            <form id="product-form">
+            <input type="hidden" id="product-id">
+            <label for="name">Product Name</label>
+            <input type="text" id="name" placeholder="e.g. Heart Pin" required>
+            <label for="label">Label</label>
+            <input type="text" id="label" placeholder="e.g. Sale, Best Seller, New">
+            <label for="price">Price (LE)</label>
+            <input type="number" id="price" placeholder="e.g. 50" required>
+            <label for="note">Note</label>
+            <input type="text" id="note" placeholder="e.g. In Stock, Sold Out">
+            <label for="description">Description</label>
+            <textarea id="description" placeholder="Product description" rows="3"></textarea>
+            <label for="image">Product Image</label>
+            <input type="file" id="image" accept="image/*" onchange="previewImage(this)">
+            <img id="image-preview" style="width:100%;max-height:180px;object-fit:contain;border-radius:12px;margin:8px 0;display:none;background:var(--bg-soft);">
+            <label><input type="checkbox" id="is-available" checked> Available in Stock</label>
+            <p id="product-message" class="message"></p>
+            <div class="form-actions">
+              <button type="submit" class="btn primary">Save Product</button>
+              <button type="button" id="reset-btn" class="btn secondary" style="padding:8px 16px;font-size:0.85rem;">Clear</button>
+            </div>
+          </form>
+
+          <h3>Current Products</h3>
+          <div id="admin-products" class="admin-products"></div>
+        </div>
+      </div>
+
+      <div id="settings-panel" class="hidden">
+        <div class="card-box">
+          <h3>Site Settings</h3>
+          <form id="settings-form">
+            <input type="text" id="site-name" placeholder="Site Name">
+            <input type="text" id="site-desc" placeholder="Description">
+            <input type="text" id="instagram" placeholder="Instagram Username">
+            <input type="number" id="shipping-cost" placeholder="Shipping Cost (LE)" step="1" min="0">
+            <p id="settings-message" class="message"></p>
+            <button type="submit" class="btn primary">Save Settings</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="orders-panel" class="hidden">
+        <div class="card-box">
+          <h3>Order History</h3>
+          <div id="orders-list" class="orders-list"></div>
+        </div>
+      </div>
+
+      <div id="users-panel" class="hidden">
+        <div class="card-box">
+          <h3>Users</h3>
+          <div id="users-list" class="orders-list"></div>
+        </div>
+      </div>
+
+      <div id="activity-panel" class="hidden">
+        <div class="card-box">
+          <h3>Activity Log</h3>
+          <div id="activity-list" class="orders-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

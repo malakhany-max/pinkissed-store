@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1781724828710,
+    "customer_name": "Test User",
+    "phone": "01234567890",
+    "city": "Cairo",
+    "address": "Test Address",
+    "notes": "",
+    "items": [
+      {
+        "product_id": "1",
+        "product_name": "Pink Pin Set",
+        "product_price": 150,
+        "quantity": 2
+      }
+    ],
+    "total_price": 300,
+    "shipping_cost": 50,
+    "status": "pending",
+    "seen": false,
+    "created_at": "2026-06-17T19:33:48.710Z"
+  }
+]

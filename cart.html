@@ -1,0 +1,325 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart - Pinkissed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="Logo22.png" type="image/png">
+  <link rel="apple-touch-icon" href="Logo22.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .cart-page{
+      max-width:700px;
+      margin:0 auto;
+      padding:20px;
+    }
+    .cart-page-box{
+      background:#fff;
+      border-radius:24px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+    .cart-page-box h2{
+      color:var(--pink4);
+      margin-bottom:16px;
+    }
+    .cart-page-items{
+      display:grid;
+      gap:12px;
+      margin-bottom:20px;
+      max-height:400px;
+      overflow-y:auto;
+    }
+    .cart-page-item{
+      display:grid;
+      grid-template-columns:80px 1fr auto auto;
+      gap:14px;
+      align-items:center;
+      padding:14px;
+      background:var(--bg-soft);
+      border-radius:14px;
+    }
+    .cart-page-item img{
+      width:80px;
+      height:80px;
+      object-fit:cover;
+      border-radius:10px;
+    }
+    .cart-page-item h4{
+      margin-bottom:4px;
+    }
+    .cart-page-item p{
+      color:var(--pink4);
+      font-weight:700;
+    }
+    .cart-page-qty{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .qty-btn-page{
+      width:30px;
+      height:30px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      background:#fff;
+      cursor:pointer;
+      font-weight:700;
+      font-size:1rem;
+    }
+    .remove-btn-page{
+      width:30px;
+      height:30px;
+      border-radius:8px;
+      border:none;
+      background:#fff0f3;
+      color:#d94e7e;
+      cursor:pointer;
+      font-size:1.2rem;
+    }
+    .cart-page-summary{
+      border-top:1px solid var(--border);
+      padding-top:12px;
+      margin-bottom:20px;
+    }
+    .cart-page-summary div{
+      display:flex;
+      justify-content:space-between;
+      padding:6px 0;
+    }
+    .total-row-page{
+      font-weight:900;
+      color:var(--pink4);
+      font-size:1.1rem;
+      border-top:1px solid var(--border);
+      padding-top:8px;
+      margin-top:8px;
+    }
+    .cart-page-form{
+      display:grid;
+      gap:10px;
+      margin-top:20px;
+    }
+    .cart-page-form input, .cart-page-form textarea{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+      font-family:inherit;
+    }
+    .payment-box{
+      display:flex;
+      justify-content:space-between;
+      padding:12px;
+      background:#f0f8ff;
+      border-radius:12px;
+    }
+    .empty-cart-page{
+      text-align:center;
+      padding:40px 20px;
+    }
+    .empty-cart-page h3{
+      color:var(--pink4);
+      margin-bottom:8px;
+    }
+    .empty-cart-page p{
+      color:#a37588;
+      margin-bottom:16px;
+    }
+    .offer-applied{
+      text-align:center;
+      margin-bottom:16px;
+    }
+    .offer-badge{
+      display:inline-block;
+      background:linear-gradient(135deg, #4CAF50, #2E7D32);
+      color:#fff;
+      padding:10px 16px;
+      border-radius:12px;
+      font-weight:800;
+    }
+    @media (max-width: 600px){
+      .cart-page-item{
+        grid-template-columns:1fr;
+        text-align:center;
+      }
+      .cart-page-item img{
+        margin:auto;
+      }
+      .cart-page-qty{
+        justify-content:center;
+      }
+      .remove-btn-page{
+        margin:auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a href="index.html" class="brand" style="cursor:pointer;text-decoration:none;color:inherit;">
+        <img src="Logo2.png" alt="Pinkissed Logo">
+        <div>
+          <h1>Pinkissed</h1>
+          <p>Made To Match You</p>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <button id="auth-btn" class="auth-btn">Login</button>
+        <button id="cart-btn" class="cart-btn-nav" onclick="window.location.href='cart.html'">🛒 <span class="cart-count">0</span></button>
+      </div>
+      <button id="menu-toggle" class="menu-toggle">☰</button>
+      <nav class="nav-links" id="nav-links">
+        <button class="close-menu-btn" id="close-menu-btn">✕</button>
+        <a href="index.html">Main Page</a>
+        <a href="products.html">Products</a>
+        <a href="orders.html">My Orders</a>
+        <a href="product-care.html">Product Care</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="cart-page">
+    <div class="cart-page-box">
+      <h2>Your Cart</h2>
+      <div id="cart-page-items" class="cart-page-items"></div>
+      <div id="cart-page-offer"></div>
+      <div id="cart-page-summary" class="cart-page-summary"></div>
+      <form id="cart-page-form" class="cart-page-form"></form>
+    </div>
+  </main>
+
+  <div id="auth-modal" class="modal">
+    <div class="modal-content auth-modal-content">
+      <div class="modal-header">
+        <h3 id="auth-modal-title">Login</h3>
+        <button id="close-auth" class="close-modal">×</button>
+      </div>
+      <form id="auth-form" class="auth-form">
+        <input type="text" id="auth-name" placeholder="Full Name">
+        <input type="email" id="auth-email" placeholder="Email" required>
+        <input type="tel" id="auth-phone" placeholder="Phone Number">
+        <input type="password" id="auth-password" placeholder="Password" required>
+        <button type="submit" class="btn primary" id="auth-submit">Login</button>
+      </form>
+      <p id="auth-message" class="message"></p>
+      <p class="auth-switch">
+        <span id="auth-switch-text">Don't have an account?</span>
+        <button type="button" id="auth-switch-btn">Sign Up</button>
+      </p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    let SHIPPING_COST = 50;
+
+    function showToast(msg, type = 'success') {
+      let ov = document.querySelector('.toast-overlay');
+      if (!ov) { ov = document.createElement('div'); ov.className = 'toast-overlay'; document.body.appendChild(ov); }
+      const t = document.createElement('div');
+      t.className = `toast ${type}`;
+      t.textContent = msg;
+      ov.appendChild(t);
+      setTimeout(() => { if (t.parentNode) t.remove(); }, 3000);
+    }
+
+    function getCart() {
+      try { return JSON.parse(localStorage.getItem('cart') || '[]'); } catch { return []; }
+    }
+    function saveCart(c) { localStorage.setItem('cart', JSON.stringify(c)); }
+
+    async function loadCartPage() {
+      try { const r = await fetch(`${API_URL}/api/settings`); const s = await r.json(); if (s.shipping_cost) SHIPPING_COST = Number(s.shipping_cost); } catch {}
+      const cart = getCart();
+      const itemsDiv = document.getElementById('cart-page-items');
+      const offerDiv = document.getElementById('cart-page-offer');
+      const summaryDiv = document.getElementById('cart-page-summary');
+      const formDiv = document.getElementById('cart-page-form');
+
+      if (cart.length === 0) {
+        itemsDiv.innerHTML = '<div class="empty-cart-page"><h3>Your cart is empty</h3><p>Start shopping and add cute pins!</p><button class="btn primary" onclick="window.location.href=\'index.html\'">Browse Products</button></div>';
+        summaryDiv.innerHTML = ''; formDiv.innerHTML = ''; offerDiv.innerHTML = '';
+        return;
+      }
+
+      let totalItems = cart.reduce((s, i) => s + i.quantity, 0);
+      let totalPrice = cart.reduce((s, i) => s + (i.product_price * i.quantity), 0);
+      let shipping = SHIPPING_COST;
+
+      if (totalItems >= 5) { shipping = 0; offerDiv.innerHTML = '<div class="offer-applied"><span class="offer-badge">Buy 5 Get 6th FREE + Free Shipping!</span></div>'; }
+      else if (totalItems >= 3) { offerDiv.innerHTML = '<div class="offer-applied"><span class="offer-badge">Buy 3 Get 1 FREE!</span></div>'; }
+      else { offerDiv.innerHTML = ''; }
+
+      itemsDiv.innerHTML = cart.map(item => `
+        <div class="cart-page-item">
+          <img src="${item.product_image || 'Logo2.png'}" alt="${item.product_name}">
+          <div><h4>${item.product_name}</h4><p>${item.product_price} LE x ${item.quantity}</p></div>
+          <div class="cart-page-qty">
+            <button class="qty-btn-page" onclick="updateQty(${item.id}, ${item.quantity - 1})">-</button>
+            <span>${item.quantity}</span>
+            <button class="qty-btn-page" onclick="updateQty(${item.id}, ${item.quantity + 1})">+</button>
+          </div>
+          <button class="remove-btn-page" onclick="removeItem(${item.id})">×</button>
+        </div>
+      `).join('');
+
+      const grandTotal = totalPrice + shipping;
+      summaryDiv.innerHTML = `<div><span>Products Total:</span> <span>${totalPrice} LE</span></div><div><span>Shipping:</span> <span>${shipping === 0 ? 'FREE!' : shipping + ' LE'}</span></div><div class="total-row-page"><span>Grand Total:</span> <span>${grandTotal} LE</span></div>`;
+
+      formDiv.innerHTML = '<h3>Checkout</h3><input type="text" id="page-name" placeholder="Full Name" required><input type="tel" id="page-phone" placeholder="Phone Number" required><input type="text" id="page-city" placeholder="City" required><input type="text" id="page-address" placeholder="Full Address" required><textarea id="page-notes" placeholder="Notes (optional)" rows="2"></textarea><div class="payment-box"><span>Payment:</span> <strong>💵 Cash on Delivery</strong></div><button type="button" class="btn primary" style="padding:14px;" onclick="placeOrder()">Place Order</button>';
+    }
+
+    function updateQty(id, qty) {
+      const cart = getCart();
+      if (qty < 1) { removeItem(id); return; }
+      const idx = cart.findIndex(i => i.id === id);
+      if (idx > -1) { cart[idx].quantity = qty; saveCart(cart); }
+      loadCartPage();
+    }
+
+    function removeItem(id) {
+      saveCart(getCart().filter(i => i.id !== id));
+      loadCartPage();
+    }
+
+    async function placeOrder() {
+      if (!currentUser?.id) {
+        showToast('Please login first to place an order', 'error');
+        setTimeout(() => window.location.href = 'index.html', 1500);
+        return;
+      }
+      const customer_name = document.getElementById('page-name').value;
+      const phone = document.getElementById('page-phone').value;
+      const city = document.getElementById('page-city').value;
+      const address = document.getElementById('page-address').value;
+      const notes = document.getElementById('page-notes').value;
+      if (!customer_name || !phone || !city || !address) { showToast('Please fill in all required fields', 'error'); return; }
+
+      const cart = getCart();
+      const total = cart.reduce((s, i) => s + (i.product_price * i.quantity), 0);
+
+      try {
+        const res = await fetch(`${API_URL}/api/orders`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ customer_name, phone, city, address, notes, items: cart, total_price: total, shipping_cost: SHIPPING_COST })
+        });
+        const data = await res.json();
+        if (!res.ok) { showToast(data.error || 'Error', 'error'); return; }
+        localStorage.removeItem('cart');
+        showToast('Order placed successfully! 🎉');
+        setTimeout(() => window.location.href = 'index.html', 1000);
+      } catch (e) { showToast('Error placing order', 'error'); }
+    }
+
+    loadCartPage();
+  </script>
+</body>
+</html>
