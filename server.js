@@ -10,6 +10,7 @@ const rateLimit = require('express-rate-limit');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const { randomUUID } = require('crypto');
 const { z } = require('zod');
 const db = require('./db');
 
@@ -20,20 +21,20 @@ const JWT_SECRET = process.env.JWT_SECRET || 'pinkissed_jwt_s3cr3t_k3y_2026!';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@pinkissed.com';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Pinkissed2026!';
 const ADMIN_PASSWORD_HASH = bcrypt.hashSync(ADMIN_PASSWORD, 10);
-const ALLOWED_ORIGINS = ['http://localhost:3000', 'http://localhost:3001', 'https://pinkissed.com', 'https://www.pinkissed.com', 'http://192.168.100.5:3000', 'https://192.168.100.5:3443', 'https://cf85gxml-3000.uks1.devtunnels.ms'];
+const ALLOWED_ORIGINS = ['http://localhost:3000', 'http://localhost:3001', 'https://pinkissed.com', 'https://www.pinkissed.com', 'http://192.168.100.5:3000', 'https://192.168.100.5:3443', 'https://cf85gxml-3000.uks1.devtunnels.ms', 'https://malakhany-max.github.io'];
 
 /* ───── Helpers ───── */
 function loadJson(filename) {
   const p = path.join(__dirname, 'data', filename);
   if (!fs.existsSync(p)) return [];
-  return JSON.parse(fs.readFileSync(p, 'utf-8'));
+  try { return JSON.parse(fs.readFileSync(p, 'utf-8')); } catch (e) { console.error('[JSON] Corrupted:', filename, e.message); return []; }
 }
 function saveJson(filename, data) {
   fs.writeFileSync(path.join(__dirname, 'data', filename), JSON.stringify(data, null, 2));
 }
-function logActivity(admin, action, details) {
+function logActivity(admin, action, details, req) {
   const logs = loadJson('activity.json');
-  logs.unshift({ admin, action, details, ip: admin?.ip || '', timestamp: new Date().toISOString() });
+  logs.unshift({ admin, action, details, ip: req?.ip || '', timestamp: new Date().toISOString() });
   if (logs.length > 200) logs.length = 200;
   saveJson('activity.json', logs);
 }
@@ -74,6 +75,10 @@ app.use('/api/', rateLimit({ windowMs: 60 * 1000, max: 200 }));
 /* ───── Directories ───── */
 if (!fs.existsSync(path.join(__dirname, 'data'))) fs.mkdirSync(path.join(__dirname, 'data'));
 if (!fs.existsSync('uploads')) fs.mkdirSync('uploads');
+
+/* ───── ID Generator ───── */
+let idCounter = Date.now();
+function nextId() { return ++idCounter; }
 
 /* ───── Token Helpers ───── */
 function getToken(req) {
@@ -135,7 +140,7 @@ app.post('/api/auth/register', async (req, res) => {
     if (users.find(u => u.email === data.email)) return res.status(400).json({ error: 'Email already registered' });
   }
 
-  const user = { id: Date.now(), ...data, password: bcrypt.hashSync(data.password, 10), created_at: new Date().toISOString() };
+  const user = { id: nextId(), ...data, password: bcrypt.hashSync(data.password, 10), created_at: new Date().toISOString() };
 
   const created = await db.createUser(user);
   if (created !== null) {
@@ -180,7 +185,7 @@ app.post('/api/admin/login', (req, res) => {
 
   const token = jwt.sign({ email: data.email, role: 'admin' }, JWT_SECRET, { expiresIn: '2h' });
   setCookie(res, token, 2 * 60 * 60 * 1000);
-  res.json({ success: true, token, message: 'Login successful' });
+  res.json({ success: true, message: 'Login successful' });
 });
 
 app.post('/api/admin/logout', verifyAdmin, (req, res) => { clearCookie(res); res.json({ success: true }); });
@@ -205,7 +210,7 @@ app.get('/api/admin/products', verifyAdmin, async (req, res) => {
 app.post('/api/admin/products', verifyAdmin, async (req, res) => {
   const data = validate(productSchema, req.body);
   if (data.error) return res.status(422).json(data);
-  const product = { id: Date.now(), ...data };
+  const product = { id: nextId(), ...data };
 
   const created = await db.createProduct(product);
   if (created !== null) { logActivity(req.admin, 'create_product', `Added "${product.name}" (${product.price} LE)`); return res.json({ success: true, product: created }); }
@@ -282,7 +287,7 @@ app.post('/api/orders', verifyUser, async (req, res) => {
   if (req.user.role === 'admin') return res.status(403).json({ error: 'Admins cannot place orders' });
   const data = validate(orderSchema, req.body);
   if (data.error) return res.status(422).json(data);
-  const order = { id: Date.now(), ...data, user_id: req.user.id, status: 'pending', seen: 0, created_at: new Date().toISOString() };
+  const order = { id: nextId(), ...data, user_id: req.user.id, status: 'pending', seen: 0, created_at: new Date().toISOString() };
 
   const created = await db.createOrder(order);
   if (created !== null) return res.json({ success: true, order: created });
@@ -369,9 +374,13 @@ app.get('/api/admin/users', verifyAdmin, async (req, res) => {
 app.post('/api/upload', verifyAdmin, (req, res) => {
   if (!req.body.image) return res.status(400).json({ error: 'No image' });
   if (req.body.image.length > 1000000) return res.status(413).json({ error: 'Image too large' });
-  const filename = `product_${Date.now()}.png`;
-  fs.writeFileSync(path.join(__dirname, 'uploads', filename), Buffer.from(req.body.image, 'base64'));
-  res.json({ url: `/uploads/${filename}` });
+  try {
+    const buf = Buffer.from(req.body.image, 'base64');
+    if (buf.length < 8) return res.status(422).json({ error: 'Invalid image data' });
+    const filename = `product_${nextId()}.png`;
+    fs.writeFileSync(path.join(__dirname, 'uploads', filename), buf);
+    res.json({ url: `/uploads/${filename}` });
+  } catch { res.status(422).json({ error: 'Invalid image data' }); }
 });
 
 /* ═══════════════════════════════════════
@@ -406,6 +415,11 @@ app.listen(PORT, () => {
   console.log(`🔐 Admin: ${ADMIN_EMAIL}`);
   console.log(`🗄️  Storage: SQLite (store.db)`);
 });
+
+/* ───── Graceful Shutdown ───── */
+function shutdown() { try { db.close(); } catch {} console.log('\nServer shut down'); process.exit(0); }
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
 
 /* ───── HTTPS (self-signed cert for local/phone testing) ───── */
 const certPath = path.join(__dirname, 'cert.pem');

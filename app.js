@@ -1,5 +1,8 @@
-﻿const API_URL = window.location.origin;
-let currentUser = JSON.parse(localStorage.getItem('user') || 'null');
+﻿const API_URL = (window.location.hostname === 'malakhany-max.github.io' || window.location.hostname.endsWith('.github.io'))
+  ? 'https://pinkissed-api.loca.lt'
+  : window.location.origin;
+let currentUser;
+try { currentUser = JSON.parse(localStorage.getItem('user')); } catch { currentUser = null; }
 let products = [];
 
 /* ───── Toast ───── */
@@ -56,7 +59,7 @@ function loadCartCount() {
 function updateAuthUI() {
   if (!authBtn) return;
   if (currentUser?.id) {
-    authBtn.textContent = `Hi, ${currentUser.name || currentUser.email}`;
+    authBtn.textContent = `Hi, ${currentUser.name || currentUser.email || 'User'}`;
     authBtn.classList.add("logged-in");
   } else {
     authBtn.textContent = 'Login';
@@ -147,7 +150,7 @@ function addToCart(btn) {
   }
 
   const cart = getCart();
-  const existing = cart.find(i => i.product_id === btn.dataset.id);
+  const existing = cart.find(i => String(i.product_id) === btn.dataset.id);
   if (existing) {
     existing.quantity += 1;
   } else {
