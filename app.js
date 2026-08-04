@@ -1,5 +1,5 @@
 const API_URL = (window.location.hostname === 'malakhany-max.github.io' || window.location.hostname.endsWith('.github.io'))
-  ? 'https://dual-southern-scuba-hans.trycloudflare.com'
+  ? 'https://greg-marked-restaurants-retreat.trycloudflare.com'
   : window.location.origin;
 let currentUser;
 try { currentUser = JSON.parse(localStorage.getItem('user')); } catch { currentUser = null; }
