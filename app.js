@@ -2,27 +2,42 @@ const API_URL = (window.location.hostname === 'malakhany-max.github.io' || windo
   ? 'https://greg-marked-restaurants-retreat.trycloudflare.com'
   : window.location.origin;
 const FALLBACK_PRODUCTS = [
-  { id: 1, name: 'Heart Pin', label: 'Best Sell', price: 160, description: 'It will be in stock soon.', image_url: 'Logo2.png', note: 'sold out', is_available: 1 },
-  { id: 2, name: "Girl's Pin", label: 'جديد!', price: 50, description: 'بنات', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 3, name: 'Star Pin Pack', label: 'Popular', price: 200, description: 'Shiny star pins pack', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 4, name: 'Bow Pin', label: 'Discount', price: 75, description: 'Love bow pin - girly style', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 6, name: 'Cherry Pins', label: 'Limited', price: 120, description: 'Cherry shaped pins', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 7, name: 'Unicorn Pin', label: 'Special', price: 90, description: 'Magical unicorn pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 8, name: 'Bear Pin', label: 'Cute', price: 85, description: 'Little bear pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 9, name: 'Cat Pin Set', label: 'Cute', price: 160, description: 'Adorable cat pins set of 4', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 10, name: 'Butterfly Pin', label: 'New', price: 65, description: 'Beautiful butterfly pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 11, name: 'Strawberry Pin', label: 'Sale', price: 55, description: 'Cute strawberry pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 12, name: 'Moon Pin', label: 'Dreamy', price: 70, description: 'Crescent moon pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 13, name: 'Sun Pin', label: 'Bright', price: 60, description: 'Sunshine pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 14, name: 'Rainbow Pin Set', label: 'Colorful', price: 190, description: 'Rainbow pins set', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 15, name: 'Mermaid Pin', label: 'Ocean', price: 95, description: 'Mermaid pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
-  { id: 16, name: 'Crown Pin', label: 'Royal', price: 80, description: 'Queen crown pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 }
+  { id: 1, name: 'Heart Pin', label: 'Best Seller', price: 150, description: 'Cute heart shaped pin', image_url: 'images/products/heart-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 2, name: "Girl's Pin", label: 'New', price: 50, description: 'Sweet girly pin', image_url: 'images/products/girl-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 3, name: 'Star Pin Pack', label: 'Popular', price: 200, description: 'Shiny star pins pack', image_url: 'images/products/star-pin-pack.svg', note: 'In Stock', is_available: 1 },
+  { id: 4, name: 'Bow Pin', label: 'Discount', price: 75, description: 'Love bow pin - girly style', image_url: 'images/products/bow-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 6, name: 'Cherry Pins', label: 'Limited', price: 120, description: 'Cherry shaped pins', image_url: 'images/products/cherry-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 7, name: 'Unicorn Pin', label: 'Special', price: 90, description: 'Magical unicorn pin', image_url: 'images/products/unicorn-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 8, name: 'Bear Pin', label: 'Cute', price: 85, description: 'Little bear pin', image_url: 'images/products/bear-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 9, name: 'Cat Pin Set', label: 'Cute', price: 160, description: 'Adorable cat pins set of 4', image_url: 'images/products/cat-pin-set.svg', note: 'In Stock', is_available: 1 },
+  { id: 10, name: 'Butterfly Pin', label: 'New', price: 65, description: 'Beautiful butterfly pin', image_url: 'images/products/butterfly-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 11, name: 'Strawberry Pin', label: 'Sale', price: 55, description: 'Cute strawberry pin', image_url: 'images/products/strawberry-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 12, name: 'Moon Pin', label: 'Dreamy', price: 70, description: 'Crescent moon pin', image_url: 'images/products/moon-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 13, name: 'Sun Pin', label: 'Bright', price: 60, description: 'Sunshine pin', image_url: 'images/products/sun-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 14, name: 'Rainbow Pin Set', label: 'Colorful', price: 190, description: 'Rainbow pins set', image_url: 'images/products/rainbow-pin-set.svg', note: 'In Stock', is_available: 1 },
+  { id: 15, name: 'Mermaid Pin', label: 'Ocean', price: 95, description: 'Mermaid pin', image_url: 'images/products/mermaid-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 16, name: 'Crown Pin', label: 'Royal', price: 80, description: 'Queen crown pin', image_url: 'images/products/crown-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 17, name: 'Flower Pin Set', label: 'New Drop', price: 180, description: 'Beautiful flower pins', image_url: 'images/products/flower-pin-set.svg', note: 'In Stock', is_available: 1 },
+  { id: 18, name: 'Cloud Pin', label: 'Soft', price: 45, description: 'Fluffy cloud pin', image_url: 'images/products/cloud-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 19, name: 'Smiley Pin', label: 'Happy', price: 40, description: 'Happy smiley pin', image_url: 'images/products/smiley-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 20, name: 'Paw Pin', label: 'Cute', price: 60, description: 'Sweet paw print pin', image_url: 'images/products/paw-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 21, name: 'Rose Pin', label: 'Romantic', price: 85, description: 'Pretty rose pin', image_url: 'images/products/rose-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 22, name: 'Love Pin Set', label: 'Love', price: 130, description: 'Cute love pins set', image_url: 'images/products/love-pin-set.svg', note: 'In Stock', is_available: 1 },
+  { id: 23, name: 'Dolphin Pin', label: 'Ocean', price: 70, description: 'Playful dolphin pin', image_url: 'images/products/dolphin-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 24, name: 'Fairy Pin', label: 'Magic', price: 100, description: 'Magical fairy pin', image_url: 'images/products/fairy-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 25, name: 'Peach Pin', label: 'Sweet', price: 65, description: 'Juicy peach pin', image_url: 'images/products/peach-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 26, name: 'Angel Pin', label: 'Sweet', price: 90, description: 'Sweet angel pin', image_url: 'images/products/angel-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 27, name: 'Flower Pin', label: 'Fresh', price: 55, description: 'Fresh flower pin', image_url: 'images/products/flower-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 28, name: 'Kawaii Pin', label: 'Kawaii', price: 75, description: 'Super kawaii pin', image_url: 'images/products/kawaii-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 29, name: 'Sparkle Pin', label: 'Shiny', price: 50, description: 'Sparkly pin', image_url: 'images/products/sparkle-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 30, name: 'Candy Pin', label: 'Sweet', price: 60, description: 'Yummy candy pin', image_url: 'images/products/candy-pin.svg', note: 'In Stock', is_available: 1 },
+  { id: 31, name: 'Frog Pin', label: 'Cute', price: 65, description: 'Tiny frog pin', image_url: 'images/products/frog-pin.svg', note: 'In Stock', is_available: 1 }
 ];
 let currentUser;
 try { currentUser = JSON.parse(localStorage.getItem('user')); } catch { currentUser = null; }
 let products = [];
 
-/* ????? Toast ????? */
+/* Toast notifications */
 function showToast(msg, type = 'success') {
   let ov = document.querySelector('.toast-overlay');
   if (!ov) { ov = document.createElement('div'); ov.className = 'toast-overlay'; document.body.appendChild(ov); }
@@ -51,7 +66,7 @@ const menuToggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
 let isLoginMode = true;
 
-/* ????? Cart (localStorage) ????? */
+/* Cart (localStorage) */
 function getCart() {
   try { return JSON.parse(localStorage.getItem('cart') || '[]'); } catch { return []; }
 }
@@ -72,7 +87,7 @@ function loadCartCount() {
   }
 }
 
-/* ????? Auth UI ????? */
+/* Auth UI */
 function updateAuthUI() {
   if (!authBtn) return;
   if (currentUser?.id) {
@@ -156,7 +171,7 @@ if (authForm) {
   });
 }
 
-/* ????? Add to Cart (client-side) ????? */
+/* Add to Cart (client-side) */
 function addToCart(btn) {
   if (!currentUser?.id) {
     if (authModal) {
@@ -185,7 +200,7 @@ function addToCart(btn) {
   showToast(`Added ${btn.dataset.name} to cart!`);
 }
 
-/* ????? Load Products ????? */
+/* Load Products */
 async function loadProducts() {
   const page = window.location.pathname.split('/').pop();
 
@@ -245,20 +260,20 @@ function renderProductGrid(list, tg) {
 updateAuthUI();
 loadProducts();
 
-/* ????? Mobile Menu ????? */
+/* Mobile Menu */
 if (menuToggle && navLinks) {
   const cm = document.getElementById("close-menu-btn");
   menuToggle.addEventListener("click", (e) => {
     e.stopPropagation();
     navLinks.classList.toggle("open");
-    menuToggle.textContent = navLinks.classList.contains("open") ? "?" : "?";
+    menuToggle.textContent = navLinks.classList.contains("open") ? "\u2715" : "\u2630";
   });
-  if (cm) cm.addEventListener("click", () => { navLinks.classList.remove("open"); menuToggle.textContent = "?"; });
-  document.querySelectorAll(".nav-links a").forEach(l => l.addEventListener("click", () => { navLinks.classList.remove("open"); menuToggle.textContent = "?"; }));
+  if (cm) cm.addEventListener("click", () => { navLinks.classList.remove("open"); menuToggle.textContent = "\u2630"; });
+  document.querySelectorAll(".nav-links a").forEach(l => l.addEventListener("click", () => { navLinks.classList.remove("open"); menuToggle.textContent = "\u2630"; }));
   document.addEventListener("click", (e) => {
     if (navLinks.classList.contains("open") && !navLinks.contains(e.target) && e.target !== menuToggle) {
       navLinks.classList.remove("open");
-      menuToggle.textContent = "?";
+      menuToggle.textContent = "\u2630";
     }
   });
 }

@@ -13,3 +13,8 @@ start_server.vbs
 start_tunnel_cf.vbs
 tunnel.ps1
 BackUp/
+*.bat
+run_pinkissed.ps1
+gen_images.js
+gen_images.ps1
+sync_products.js
