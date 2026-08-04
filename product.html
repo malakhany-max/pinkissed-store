@@ -265,8 +265,12 @@
     const productId = params.get('id');
 
     async function loadProduct() {
-      const res = await fetch(`${API_URL}/api/products`);
-      const products = await res.json();
+      let products = [];
+      try {
+        const res = await fetch(`${API_URL}/api/products`);
+        if (res.ok) products = await res.json();
+      } catch (e) { console.warn('API unavailable, using fallback products:', e.message); }
+      if (!Array.isArray(products) || !products.length) products = FALLBACK_PRODUCTS;
       const product = products.find(p => p.id == productId);
       
       if (!product) {

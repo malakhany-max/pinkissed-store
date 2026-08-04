@@ -1,6 +1,23 @@
 const API_URL = (window.location.hostname === 'malakhany-max.github.io' || window.location.hostname.endsWith('.github.io'))
   ? 'https://greg-marked-restaurants-retreat.trycloudflare.com'
   : window.location.origin;
+const FALLBACK_PRODUCTS = [
+  { id: 1, name: 'Heart Pin', label: 'Best Sell', price: 160, description: 'It will be in stock soon.', image_url: 'Logo2.png', note: 'sold out', is_available: 1 },
+  { id: 2, name: "Girl's Pin", label: 'جديد!', price: 50, description: 'بنات', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 3, name: 'Star Pin Pack', label: 'Popular', price: 200, description: 'Shiny star pins pack', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 4, name: 'Bow Pin', label: 'Discount', price: 75, description: 'Love bow pin - girly style', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 6, name: 'Cherry Pins', label: 'Limited', price: 120, description: 'Cherry shaped pins', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 7, name: 'Unicorn Pin', label: 'Special', price: 90, description: 'Magical unicorn pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 8, name: 'Bear Pin', label: 'Cute', price: 85, description: 'Little bear pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 9, name: 'Cat Pin Set', label: 'Cute', price: 160, description: 'Adorable cat pins set of 4', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 10, name: 'Butterfly Pin', label: 'New', price: 65, description: 'Beautiful butterfly pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 11, name: 'Strawberry Pin', label: 'Sale', price: 55, description: 'Cute strawberry pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 12, name: 'Moon Pin', label: 'Dreamy', price: 70, description: 'Crescent moon pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 13, name: 'Sun Pin', label: 'Bright', price: 60, description: 'Sunshine pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 14, name: 'Rainbow Pin Set', label: 'Colorful', price: 190, description: 'Rainbow pins set', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 15, name: 'Mermaid Pin', label: 'Ocean', price: 95, description: 'Mermaid pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 },
+  { id: 16, name: 'Crown Pin', label: 'Royal', price: 80, description: 'Queen crown pin', image_url: 'Logo2.png', note: 'In Stock', is_available: 1 }
+];
 let currentUser;
 try { currentUser = JSON.parse(localStorage.getItem('user')); } catch { currentUser = null; }
 let products = [];
@@ -172,44 +189,46 @@ function addToCart(btn) {
 async function loadProducts() {
   const page = window.location.pathname.split('/').pop();
 
+  async function getProducts() {
+    try {
+      const res = await fetch(`${API_URL}/api/products`);
+      if (!res.ok) throw new Error('API error');
+      const data = await res.json();
+      if (Array.isArray(data) && data.length) return data;
+    } catch (e) { console.warn('API unavailable, using fallback products:', e.message); }
+    return FALLBACK_PRODUCTS;
+  }
+
   if (page === 'index.html' || page === '') {
     const bs = document.getElementById('best-sellers-grid');
     const sg = document.getElementById('sale-products-grid');
-    try {
-      const res = await fetch(`${API_URL}/api/products`);
-      const data = await res.json();
-      if (res.ok && data) {
-        products = data;
-        const avail = data.filter(p => p.is_available == 1 || p.is_available === true);
-        if (bs) renderProductGrid(avail.slice(0, 4), bs);
-        if (sg) {
-          const sale = avail.filter(p => p.label && (p.label.toLowerCase().includes('sale') || p.label.toLowerCase().includes('discount')));
-          renderProductGrid(sale, sg);
-          sg.parentElement.style.display = sale.length === 0 ? 'none' : 'block';
-        }
-      }
-    } catch (e) { console.error(e); }
+    const data = await getProducts();
+    products = data;
+    const avail = data.filter(p => p.is_available == 1 || p.is_available === true);
+    if (bs) renderProductGrid(avail.slice(0, 4), bs);
+    if (sg) {
+      const sale = avail.filter(p => p.label && (p.label.toLowerCase().includes('sale') || p.label.toLowerCase().includes('discount')));
+      renderProductGrid(sale, sg);
+      sg.parentElement.style.display = sale.length === 0 ? 'none' : 'block';
+    }
     return;
   }
 
   const tg = productsGrid;
   if (!tg) return;
-  try {
-    const res = await fetch(`${API_URL}/api/products`);
-    const data = await res.json();
-    if (!res.ok) { if (emptyMessage) { emptyMessage.style.display = 'block'; emptyMessage.textContent = 'Error loading products'; } return; }
-    products = data;
-    tg.innerHTML = '';
-    if (!data.length) { if (emptyMessage) { emptyMessage.style.display = 'block'; emptyMessage.textContent = 'No products'; } return; }
-    data.filter(p => p.is_available == 1 || p.is_available === true).forEach(p => {
-      const c = document.createElement('div');
-      c.className = 'product-card';
-      c.onclick = () => window.location.href = `product.html?id=${p.id}`;
-      c.innerHTML = `<div class="product-image"><img src="${p.image_url || 'Logo2.png'}" alt="${p.name}"></div><div class="product-body"><span class="product-label">${p.label || 'Pinkissed Pick'}</span><h4>${p.name}</h4><p>${p.description || ''}</p><div class="price-row"><div class="price">${p.price} LE</div><div class="small-note">${p.note || 'Available'}</div></div><div class="card-actions"><button onclick="event.stopPropagation(); window.location.href='product.html?id=${p.id}'">View</button><button class="add-to-cart" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-image="${p.image_url || ''}" onclick="event.stopPropagation(); addToCart(this)">Add to Cart</button></div></div>`;
-      tg.appendChild(c);
-    });
-    if (emptyMessage) emptyMessage.style.display = 'none';
-  } catch (e) { if (emptyMessage) { emptyMessage.style.display = 'block'; emptyMessage.textContent = 'Error loading products'; } }
+  const data = await getProducts();
+  products = data;
+  tg.innerHTML = '';
+  const avail = data.filter(p => p.is_available == 1 || p.is_available === true);
+  if (!avail.length) { if (emptyMessage) { emptyMessage.style.display = 'block'; emptyMessage.textContent = 'No products'; } return; }
+  avail.forEach(p => {
+    const c = document.createElement('div');
+    c.className = 'product-card';
+    c.onclick = () => window.location.href = `product.html?id=${p.id}`;
+    c.innerHTML = `<div class="product-image"><img src="${p.image_url || 'Logo2.png'}" alt="${p.name}"></div><div class="product-body"><span class="product-label">${p.label || 'Pinkissed Pick'}</span><h4>${p.name}</h4><p>${p.description || ''}</p><div class="price-row"><div class="price">${p.price} LE</div><div class="small-note">${p.note || 'Available'}</div></div><div class="card-actions"><button onclick="event.stopPropagation(); window.location.href='product.html?id=${p.id}'">View</button><button class="add-to-cart" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-image="${p.image_url || ''}" onclick="event.stopPropagation(); addToCart(this)">Add to Cart</button></div></div>`;
+    tg.appendChild(c);
+  });
+  if (emptyMessage) emptyMessage.style.display = 'none';
 }
 
 function renderProductGrid(list, tg) {

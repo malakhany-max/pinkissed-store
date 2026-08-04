@@ -3,3 +3,13 @@ data/*
 uploads/
 *.log
 gencert.js
+.env
+node_modules/
+cert.pem
+key.pem
+cloudflared.exe
+start_tunnel.vbs
+start_server.vbs
+start_tunnel_cf.vbs
+tunnel.ps1
+BackUp/
