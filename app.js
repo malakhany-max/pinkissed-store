@@ -1,11 +1,11 @@
-﻿const API_URL = (window.location.hostname === 'malakhany-max.github.io' || window.location.hostname.endsWith('.github.io'))
+const API_URL = (window.location.hostname === 'malakhany-max.github.io' || window.location.hostname.endsWith('.github.io'))
   ? 'https://dual-southern-scuba-hans.trycloudflare.com'
   : window.location.origin;
 let currentUser;
 try { currentUser = JSON.parse(localStorage.getItem('user')); } catch { currentUser = null; }
 let products = [];
 
-/* ───── Toast ───── */
+/* ????? Toast ????? */
 function showToast(msg, type = 'success') {
   let ov = document.querySelector('.toast-overlay');
   if (!ov) { ov = document.createElement('div'); ov.className = 'toast-overlay'; document.body.appendChild(ov); }
@@ -34,7 +34,7 @@ const menuToggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
 let isLoginMode = true;
 
-/* ───── Cart (localStorage) ───── */
+/* ????? Cart (localStorage) ????? */
 function getCart() {
   try { return JSON.parse(localStorage.getItem('cart') || '[]'); } catch { return []; }
 }
@@ -55,7 +55,7 @@ function loadCartCount() {
   }
 }
 
-/* ───── Auth UI ───── */
+/* ????? Auth UI ????? */
 function updateAuthUI() {
   if (!authBtn) return;
   if (currentUser?.id) {
@@ -139,7 +139,7 @@ if (authForm) {
   });
 }
 
-/* ───── Add to Cart (client-side) ───── */
+/* ????? Add to Cart (client-side) ????? */
 function addToCart(btn) {
   if (!currentUser?.id) {
     if (authModal) {
@@ -168,7 +168,7 @@ function addToCart(btn) {
   showToast(`Added ${btn.dataset.name} to cart!`);
 }
 
-/* ───── Load Products ───── */
+/* ????? Load Products ????? */
 async function loadProducts() {
   const page = window.location.pathname.split('/').pop();
 
@@ -226,20 +226,20 @@ function renderProductGrid(list, tg) {
 updateAuthUI();
 loadProducts();
 
-/* ───── Mobile Menu ───── */
+/* ????? Mobile Menu ????? */
 if (menuToggle && navLinks) {
   const cm = document.getElementById("close-menu-btn");
   menuToggle.addEventListener("click", (e) => {
     e.stopPropagation();
     navLinks.classList.toggle("open");
-    menuToggle.textContent = navLinks.classList.contains("open") ? "✕" : "☰";
+    menuToggle.textContent = navLinks.classList.contains("open") ? "?" : "?";
   });
-  if (cm) cm.addEventListener("click", () => { navLinks.classList.remove("open"); menuToggle.textContent = "☰"; });
-  document.querySelectorAll(".nav-links a").forEach(l => l.addEventListener("click", () => { navLinks.classList.remove("open"); menuToggle.textContent = "☰"; }));
+  if (cm) cm.addEventListener("click", () => { navLinks.classList.remove("open"); menuToggle.textContent = "?"; });
+  document.querySelectorAll(".nav-links a").forEach(l => l.addEventListener("click", () => { navLinks.classList.remove("open"); menuToggle.textContent = "?"; }));
   document.addEventListener("click", (e) => {
     if (navLinks.classList.contains("open") && !navLinks.contains(e.target) && e.target !== menuToggle) {
       navLinks.classList.remove("open");
-      menuToggle.textContent = "☰";
+      menuToggle.textContent = "?";
     }
   });
 }
